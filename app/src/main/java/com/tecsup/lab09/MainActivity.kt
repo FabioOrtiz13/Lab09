@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -109,12 +110,21 @@ fun Contenido(
             composable("posts") { ScreenPosts(navController, servicio) }
             composable("postsVer/{id}", arguments = listOf(
                 navArgument("id") { type = NavType.IntType} )
-            ) {
+            )
+            {
                 ScreenPost(navController, servicio, it.arguments!!.getInt("id"))
             }
+            composable("crear") {
+                ScreenAgregarPost(servicio) {
+                    navController.navigate("posts")
+                }
+            }
+
         }
     }
 }
+
+
 
 @Composable
 fun ScreenInicio() {
